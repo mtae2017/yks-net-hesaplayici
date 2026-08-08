@@ -6,15 +6,15 @@
     <meta name="google-site-verification" content="mX0Knj2KaZBOFZZVqyVL-4lVLQ27l4CRtPeqz-NDzmI" />
     
     <!-- Primary Meta Tags -->
-    <title>YKS Net Takip Paneli & Deneme Analiz Aracı</title>
-    <meta name="title" content="YKS Net Takip Paneli & Deneme Analiz Aracı">
-    <meta name="description" content="TYT ve AYT deneme netlerinizi tarih tarih kaydedin, grafiklerle gelişiminizi takip edin ve hedeflerinize ulaşın. Ücretsiz ve reklamsız!">
+    <title>YKS Net Takip Paneli & Branş Deneme Analiz Aracı</title>
+    <meta name="title" content="YKS Net Takip Paneli & Branş Deneme Analiz Aracı">
+    <meta name="description" content="TYT ve AYT deneme netlerinizi branş branş tarih tarih kaydedin, grafiklerle gelişiminizi takip edin ve hedeflerinize ulaşın.">
 
     <!-- Open Graph / Facebook / WhatsApp -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://yks-net-hesaplayici.vercel.app/">
-    <meta property="og:title" content="YKS Net Takip Paneli & Deneme Analizi">
-    <meta property="og:description" content="Deneme netlerinizi kaydedin, gelişim grafiğinizi izleyin ve hedeflerinize bir adım daha yaklaşın.">
+    <meta property="og:title" content="YKS Net Takip Paneli & Branş Analizi">
+    <meta property="og:description" content="Türkçe, Matematik, Sosyal ve Fen netlerinizi kaydedin, gelişiminizi izleyin.">
     <meta property="og:image" content="https://images.unsplash.com/photo-1434030216411-0b793f4b4173?auto=format&fit=crop&w=1200&q=80">
 
     <!-- Tailwind CSS CDN -->
@@ -22,13 +22,13 @@
 </head>
 <body class="bg-slate-950 text-slate-100 min-h-screen py-6 px-4 font-sans antialiased flex flex-col justify-between">
 
-    <div class="max-w-4xl mx-auto w-full space-y-6">
+    <div class="max-w-5xl mx-auto w-full space-y-6">
         
         <!-- Header & Top Navigation Bar -->
         <header class="flex flex-col md:flex-row items-center justify-between gap-4 border-b border-slate-800/80 pb-4">
             <div class="text-center md:text-left space-y-1">
                 <div class="inline-flex items-center gap-2 bg-indigo-500/10 border border-indigo-500/20 px-2.5 py-0.5 rounded-full text-indigo-400 text-[11px] font-semibold">
-                    📈 Gelişim Takip Sistemi
+                    📈 Detaylı Branş Analizi
                 </div>
                 <h1 class="text-2xl md:text-4xl font-black text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-400">
                     YKS Net Takip Paneli
@@ -48,26 +48,44 @@
 
         <!-- Deneme Ekleme Kartı -->
         <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 shadow-xl space-y-4">
-            <h2 class="text-xs font-bold text-slate-400 uppercase tracking-wider">Yeni Deneme Sonucu Ekle</h2>
+            <h2 class="text-xs font-bold text-slate-400 uppercase tracking-wider">Yeni Deneme Sonucu Ekle (Branş Bazlı)</h2>
             
-            <form id="net-form" onsubmit="denemeEkle(event)" class="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                <div>
-                    <label class="block text-xs font-semibold text-slate-300 mb-1">Deneme Adı / Tarih</label>
-                    <input type="text" id="deneme-adi" placeholder="Örn: Özdebir TYT 1" required class="w-full bg-slate-950 border border-slate-800 rounded-xl p-2.5 text-xs text-slate-100 focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+            <form id="net-form" onsubmit="denemeEkle(event)" class="space-y-4">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-300 mb-1">Deneme Adı / Yayın</label>
+                        <input type="text" id="deneme-adi" placeholder="Örn: Özdebir TYT Denemesi 1" required class="w-full bg-slate-950 border border-slate-800 rounded-xl p-2.5 text-xs text-slate-100 focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-300 mb-1">Sınav Türü</label>
+                        <select id="deneme-turu" class="w-full bg-slate-950 border border-slate-800 rounded-xl p-2.5 text-xs text-slate-100 focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+                            <option value="TYT">TYT</option>
+                            <option value="AYT">AYT</option>
+                        </select>
+                    </div>
                 </div>
-                <div>
-                    <label class="block text-xs font-semibold text-slate-300 mb-1">Sınav Türü</label>
-                    <select id="deneme-turu" class="w-full bg-slate-950 border border-slate-800 rounded-xl p-2.5 text-xs text-slate-100 focus:ring-2 focus:ring-indigo-500 focus:outline-none">
-                        <option value="TYT">TYT</option>
-                        <option value="AYT Sayısal">AYT Sayısal</option>
-                        <option value="AYT Eşit Ağırlık">AYT Eşit Ağırlık</option>
-                    </select>
+
+                <!-- Branş Netleri Grid -->
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-2 border-t border-slate-800/80">
+                    <div>
+                        <label class="block text-[11px] font-semibold text-indigo-300 mb-1">Türkçe Neti</label>
+                        <input type="number" step="0.25" id="net-turkce" placeholder="Örn: 32.5" required class="w-full bg-slate-950 border border-slate-800 rounded-xl p-2.5 text-xs text-slate-100 focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-[11px] font-semibold text-purple-300 mb-1">Sosyal Neti</label>
+                        <input type="number" step="0.25" id="net-sosyal" placeholder="Örn: 15.0" required class="w-full bg-slate-950 border border-slate-800 rounded-xl p-2.5 text-xs text-slate-100 focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-[11px] font-semibold text-pink-300 mb-1">Matematik Neti</label>
+                        <input type="number" step="0.25" id="net-matematik" placeholder="Örn: 28.75" required class="w-full bg-slate-950 border border-slate-800 rounded-xl p-2.5 text-xs text-slate-100 focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-[11px] font-semibold text-cyan-300 mb-1">Fen Neti</label>
+                        <input type="number" step="0.25" id="net-fen" placeholder="Örn: 14.25" required class="w-full bg-slate-950 border border-slate-800 rounded-xl p-2.5 text-xs text-slate-100 focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+                    </div>
                 </div>
-                <div>
-                    <label class="block text-xs font-semibold text-slate-300 mb-1">Toplam Net</label>
-                    <input type="number" step="0.25" id="deneme-net" placeholder="Örn: 85.50" required class="w-full bg-slate-950 border border-slate-800 rounded-xl p-2.5 text-xs text-slate-100 focus:ring-2 focus:ring-indigo-500 focus:outline-none">
-                </div>
-                <div class="sm:col-span-3 flex justify-end">
+
+                <div class="flex justify-end pt-2">
                     <button type="submit" class="bg-indigo-600 hover:bg-indigo-500 text-white font-bold py-2.5 px-6 rounded-xl text-xs shadow-md transition">
                         + Denemeyi Kaydet
                     </button>
@@ -75,10 +93,10 @@
             </form>
         </div>
 
-        <!-- Kayıtlı Denemeler Listesi -->
+        <!-- Kayıtlı Denemeler Tablosu -->
         <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 shadow-xl space-y-3">
             <div class="flex items-center justify-between">
-                <h2 class="text-xs font-bold text-slate-400 uppercase tracking-wider">Geçmiş Denemelerim</h2>
+                <h2 class="text-xs font-bold text-slate-400 uppercase tracking-wider">Geçmiş Deneme Analizlerim</h2>
                 <button onclick="tumunuTemizle()" class="text-[10px] text-rose-400 hover:underline">Tümünü Sil</button>
             </div>
 
@@ -88,7 +106,11 @@
                         <tr>
                             <th class="px-3 py-2.5 rounded-l-lg">Deneme Adı</th>
                             <th class="px-3 py-2.5 text-center">Tür</th>
-                            <th class="px-3 py-2.5 text-center">Net</th>
+                            <th class="px-3 py-2.5 text-center">Türkçe</th>
+                            <th class="px-3 py-2.5 text-center">Sosyal</th>
+                            <th class="px-3 py-2.5 text-center">Matematik</th>
+                            <th class="px-3 py-2.5 text-center">Fen</th>
+                            <th class="px-3 py-2.5 text-center">Toplam Net</th>
                             <th class="px-3 py-2.5 text-right rounded-r-lg">İşlem</th>
                         </tr>
                     </thead>
@@ -108,10 +130,10 @@
 
     <!-- JavaScript Engine -->
     <script>
-        let denemeler = JSON.parse(localStorage.getItem('yks_denemelerim')) || [];
+        let denemeler = JSON.parse(localStorage.getItem('yks_denemelerim_detayli')) || [];
 
         function kaydetVeGoster() {
-            localStorage.setItem('yks_denemelerim', JSON.stringify(denemeler));
+            localStorage.setItem('yks_denemelerim_detayli', JSON.stringify(denemeler));
             listeyiGoster();
         }
 
@@ -119,14 +141,23 @@
             e.preventDefault();
             const adi = document.getElementById('deneme-adi').value;
             const turu = document.getElementById('deneme-turu').value;
-            const net = parseFloat(document.getElementById('deneme-net').value);
+            const turkce = parseFloat(document.getElementById('net-turkce').value) || 0;
+            const sosyal = parseFloat(document.getElementById('net-sosyal').value) || 0;
+            const matematik = parseFloat(document.getElementById('net-matematik').value) || 0;
+            const fen = parseFloat(document.getElementById('net-fen').value) || 0;
 
-            if (adi && !isNaN(net)) {
+            const toplamNet = turkce + sosyal + matematik + fen;
+
+            if (adi) {
                 denemeler.push({
                     id: Date.now(),
                     adi: adi,
                     turu: turu,
-                    net: net
+                    turkce: turkce,
+                    sosyal: sosyal,
+                    matematik: matematik,
+                    fen: fen,
+                    toplam: toplamNet
                 });
                 document.getElementById('net-form').reset();
                 kaydetVeGoster();
@@ -147,11 +178,10 @@
 
         function listeyiGoster() {
             const tbody = document.getElementById('deneme-listesi');
-
             if (!tbody) return;
 
             if (denemeler.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="4" class="text-center py-6 text-slate-500 italic">Henüz kaydedilmiş deneme yok.</td></tr>`;
+                tbody.innerHTML = `<tr><td colspan="8" class="text-center py-6 text-slate-500 italic">Henüz kaydedilmiş deneme yok. Yukarıdan ekleyebilirsiniz.</td></tr>`;
                 return;
             }
 
@@ -159,7 +189,11 @@
                 <tr class="hover:bg-slate-800/40 transition">
                     <td class="px-3 py-2.5 font-bold text-slate-200">${item.adi}</td>
                     <td class="px-3 py-2.5 text-center text-indigo-400 font-mono">${item.turu}</td>
-                    <td class="px-3 py-2.5 text-center font-bold text-emerald-400">${item.net} Net</td>
+                    <td class="px-3 py-2.5 text-center">${item.turkce}</td>
+                    <td class="px-3 py-2.5 text-center">${item.sosyal}</td>
+                    <td class="px-3 py-2.5 text-center">${item.matematik}</td>
+                    <td class="px-3 py-2.5 text-center">${item.fen}</td>
+                    <td class="px-3 py-2.5 text-center font-bold text-emerald-400">${item.toplam.toFixed(2)}</td>
                     <td class="px-3 py-2.5 text-right">
                         <button onclick="denemeSil(${item.id})" class="text-rose-400 hover:text-rose-300 font-bold px-2 py-1 text-xs">Sil</button>
                     </td>
