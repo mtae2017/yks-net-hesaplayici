@@ -17,13 +17,6 @@
     <meta property="og:description" content="Deneme netlerinizi kaydedin, gelişim grafiğinizi izleyin ve hedeflerinize bir adım daha yaklaşın.">
     <meta property="og:image" content="https://images.unsplash.com/photo-1434030216411-0b793f4b4173?auto=format&fit=crop&w=1200&q=80">
 
-    <!-- Twitter -->
-    <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:url" content="https://yks-net-hesaplayici.vercel.app/">
-    <meta property="twitter:title" content="YKS Net Takip Paneli & Deneme Analizi">
-    <meta property="twitter:description" content="Deneme netlerinizi kaydedin, gelişim grafiğinizi izleyin.">
-    <meta property="twitter:image" content="https://images.unsplash.com/photo-1434030216411-0b793f4b4173?auto=format&fit=crop&w=1200&q=80">
-
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
@@ -154,6 +147,8 @@
 
         function listeyiGoster() {
             const tbody = document.getElementById('deneme-listesi');
+
+            if (!tbody) return;
 
             if (denemeler.length === 0) {
                 tbody.innerHTML = `<tr><td colspan="4" class="text-center py-6 text-slate-500 italic">Henüz kaydedilmiş deneme yok.</td></tr>`;
