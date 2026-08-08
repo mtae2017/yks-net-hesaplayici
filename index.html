@@ -4,542 +4,177 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="google-site-verification" content="mX0Knj2KaZBOFZZVqyVL-4lVLQ27l4CRtPeqz-NDzmI" />
-    <title>YKS Takip Panelim - Net, Grafik & Pomodoro</title>
+    
+    <!-- Primary Meta Tags -->
+    <title>YKS Net Takip Paneli & Deneme Analiz Aracı</title>
+    <meta name="title" content="YKS Net Takip Paneli & Deneme Analiz Aracı">
+    <meta name="description" content="TYT ve AYT deneme netlerinizi tarih tarih kaydedin, grafiklerle gelişiminizi takip edin ve hedeflerinize ulaşın. Ücretsiz ve reklamsız!">
+
+    <!-- Open Graph / Facebook / WhatsApp -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://yks-net-hesaplayici.vercel.app/">
+    <meta property="og:title" content="YKS Net Takip Paneli & Deneme Analizi">
+    <meta property="og:description" content="Deneme netlerinizi kaydedin, gelişim grafiğinizi izleyin ve hedeflerinize bir adım daha yaklaşın.">
+    <meta property="og:image" content="https://images.unsplash.com/photo-1434030216411-0b793f4b4173?auto=format&fit=crop&w=1200&q=80">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://yks-net-hesaplayici.vercel.app/">
+    <meta property="twitter:title" content="YKS Net Takip Paneli & Deneme Analizi">
+    <meta property="twitter:description" content="Deneme netlerinizi kaydedin, gelişim grafiğinizi izleyin.">
+    <meta property="twitter:image" content="https://images.unsplash.com/photo-1434030216411-0b793f4b4173?auto=format&fit=crop&w=1200&q=80">
+
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Chart.js CDN -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
-<body class="bg-slate-950 text-slate-100 min-h-screen py-6 px-4 font-sans antialiased">
+<body class="bg-slate-950 text-slate-100 min-h-screen py-6 px-4 font-sans antialiased flex flex-col justify-between">
 
-    <div class="max-w-4xl mx-auto space-y-6">
+    <div class="max-w-4xl mx-auto w-full space-y-6">
         
-        <!-- Header -->
-        <header class="text-center space-y-1">
-            <h1 class="text-3xl md:text-4xl font-black text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 via-cyan-400 to-emerald-400">
-                YKS 2027 Başarı Paneli
-            </h1>
-            <p class="text-slate-400 text-xs md:text-sm">Gelişimini grafiklerle gör, hedeflerine adım adım ulaş.</p>
+        <!-- Header & Top Navigation Bar -->
+        <header class="flex flex-col md:flex-row items-center justify-between gap-4 border-b border-slate-800/80 pb-4">
+            <div class="text-center md:text-left space-y-1">
+                <div class="inline-flex items-center gap-2 bg-indigo-500/10 border border-indigo-500/20 px-2.5 py-0.5 rounded-full text-indigo-400 text-[11px] font-semibold">
+                    📈 Gelişim Takip Sistemi
+                </div>
+                <h1 class="text-2xl md:text-4xl font-black text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-400">
+                    YKS Net Takip Paneli
+                </h1>
+            </div>
+
+            <!-- Top Right Cross Links -->
+            <div class="flex flex-wrap items-center justify-center gap-2">
+                <a href="https://yks-tercih-robotu.vercel.app" target="_blank" class="bg-slate-900 hover:bg-slate-800 border border-slate-800 hover:border-amber-500/50 px-3 py-2 rounded-xl text-xs font-semibold text-amber-400 transition flex items-center gap-1.5 shadow-sm">
+                    🎓 Tercih Robotu
+                </a>
+                <a href="https://qr-kod-olusturucu.vercel.app" target="_blank" class="bg-slate-900 hover:bg-slate-800 border border-slate-800 hover:border-emerald-500/50 px-3 py-2 rounded-xl text-xs font-semibold text-emerald-400 transition flex items-center gap-1.5 shadow-sm">
+                    ⚡ QR Kod Oluşturucu
+                </a>
+            </div>
         </header>
 
-        <!-- Top Widgets: Countdown & Pomodoro Side-by-Side -->
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <!-- Deneme Ekleme Kartı -->
+        <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 shadow-xl space-y-4">
+            <h2 class="text-xs font-bold text-slate-400 uppercase tracking-wider">Yeni Deneme Sonucu Ekle</h2>
             
-            <!-- Countdown Widget -->
-            <div class="bg-slate-900/80 border border-slate-800 rounded-2xl p-4 shadow-lg flex flex-col justify-between">
-                <div class="flex items-center justify-between mb-2">
-                    <span class="text-xs font-bold text-indigo-400 uppercase tracking-wider">⏳ YKS 2027 Kalan Süre</span>
-                    <span class="text-[10px] bg-indigo-500/10 text-indigo-300 px-2 py-0.5 rounded-full border border-indigo-500/20">Canlı Sayaç</span>
-                </div>
-                <div class="grid grid-cols-4 gap-2 text-center my-auto">
-                    <div class="bg-slate-950 p-2 rounded-xl border border-slate-800">
-                        <span id="cd-days" class="text-xl md:text-2xl font-extrabold text-indigo-300 block">00</span>
-                        <span class="text-[9px] text-slate-500 uppercase font-semibold">Gün</span>
-                    </div>
-                    <div class="bg-slate-950 p-2 rounded-xl border border-slate-800">
-                        <span id="cd-hours" class="text-xl md:text-2xl font-extrabold text-indigo-300 block">00</span>
-                        <span class="text-[9px] text-slate-500 uppercase font-semibold">Saat</span>
-                    </div>
-                    <div class="bg-slate-950 p-2 rounded-xl border border-slate-800">
-                        <span id="cd-minutes" class="text-xl md:text-2xl font-extrabold text-indigo-300 block">00</span>
-                        <span class="text-[9px] text-slate-500 uppercase font-semibold">Dk</span>
-                    </div>
-                    <div class="bg-slate-950 p-2 rounded-xl border border-slate-800">
-                        <span id="cd-seconds" class="text-xl md:text-2xl font-extrabold text-cyan-400 block">00</span>
-                        <span class="text-[9px] text-slate-500 uppercase font-semibold">Sn</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Pomodoro Widget -->
-            <div class="bg-slate-900/80 border border-slate-800 rounded-2xl p-4 shadow-lg flex flex-col justify-between">
-                <div class="flex items-center justify-between mb-2">
-                    <span class="text-xs font-bold text-emerald-400 uppercase tracking-wider">⏱️ Pomodoro Çalışma Sayacı</span>
-                    <span id="pomo-status-text" class="text-[10px] text-slate-400">25 Dk Odaklanma</span>
-                </div>
-                <div class="flex items-center justify-between gap-4 my-auto">
-                    <div id="pomo-display" class="text-3xl font-black font-mono text-emerald-400 bg-slate-950 px-4 py-2 rounded-xl border border-slate-800 tracking-wider">
-                        25:00
-                    </div>
-                    <div class="flex gap-2 w-full">
-                        <button id="pomo-btn" onclick="togglePomodoro()" class="flex-1 bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-2 px-3 rounded-xl text-xs transition">
-                            Başlat
-                        </button>
-                        <button onclick="resetPomodoro()" class="bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold py-2 px-3 rounded-xl text-xs transition">
-                            Sıfırla
-                        </button>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-
-        <!-- Main Input Container with Tab Selection -->
-        <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 shadow-xl space-y-5">
-            
-            <!-- Tabs -->
-            <div class="flex border-b border-slate-800 pb-3 gap-2">
-                <button id="tab-tyt-btn" onclick="switchTab('tyt')" class="flex-1 py-2 rounded-xl font-bold text-sm bg-indigo-600 text-white transition">
-                    TYT Dersleri (120 Soru)
-                </button>
-                <button id="tab-ayt-btn" onclick="switchTab('ayt')" class="flex-1 py-2 rounded-xl font-bold text-sm bg-slate-800 text-slate-400 hover:text-white transition">
-                    AYT Sayısal (80 Soru)
-                </button>
-            </div>
-
-            <!-- TYT Content -->
-            <div id="tab-tyt" class="space-y-3">
-                <div class="grid grid-cols-12 gap-2 text-xs font-semibold text-slate-400 px-1 mb-1">
-                    <span class="col-span-6">Ders Adı</span>
-                    <span class="col-span-2 text-center text-emerald-400">Doğru</span>
-                    <span class="col-span-2 text-center text-rose-400">Yanlış</span>
-                    <span class="col-span-2 text-center text-slate-400">Boş</span>
-                </div>
-                <div class="grid grid-cols-12 gap-2 items-center">
-                    <label class="col-span-6 text-sm font-medium text-slate-300">Türkçe (40)</label>
-                    <input type="number" id="tyt-turkce-d" min="0" max="40" placeholder="0" class="col-span-2 bg-slate-950 border border-slate-800 rounded-lg p-2 text-center text-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none">
-                    <input type="number" id="tyt-turkce-y" min="0" max="40" placeholder="0" class="col-span-2 bg-slate-950 border border-slate-800 rounded-lg p-2 text-center text-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none">
-                    <input type="number" id="tyt-turkce-b" min="0" max="40" placeholder="0" class="col-span-2 bg-slate-950 border border-slate-800 rounded-lg p-2 text-center text-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none">
-                </div>
-                <div class="grid grid-cols-12 gap-2 items-center">
-                    <label class="col-span-6 text-sm font-medium text-slate-300">Sosyal Bilimler (20)</label>
-                    <input type="number" id="tyt-sosyal-d" min="0" max="20" placeholder="0" class="col-span-2 bg-slate-950 border border-slate-800 rounded-lg p-2 text-center text-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none">
-                    <input type="number" id="tyt-sosyal-y" min="0" max="20" placeholder="0" class="col-span-2 bg-slate-950 border border-slate-800 rounded-lg p-2 text-center text-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none">
-                    <input type="number" id="tyt-sosyal-b" min="0" max="20" placeholder="0" class="col-span-2 bg-slate-950 border border-slate-800 rounded-lg p-2 text-center text-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none">
-                </div>
-                <div class="grid grid-cols-12 gap-2 items-center">
-                    <label class="col-span-6 text-sm font-medium text-slate-300">Temel Matematik (40)</label>
-                    <input type="number" id="tyt-mat-d" min="0" max="40" placeholder="0" class="col-span-2 bg-slate-950 border border-slate-800 rounded-lg p-2 text-center text-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none">
-                    <input type="number" id="tyt-mat-y" min="0" max="40" placeholder="0" class="col-span-2 bg-slate-950 border border-slate-800 rounded-lg p-2 text-center text-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none">
-                    <input type="number" id="tyt-mat-b" min="0" max="40" placeholder="0" class="col-span-2 bg-slate-950 border border-slate-800 rounded-lg p-2 text-center text-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none">
-                </div>
-                <div class="grid grid-cols-12 gap-2 items-center">
-                    <label class="col-span-6 text-sm font-medium text-slate-300">Fen Bilimleri (20)</label>
-                    <input type="number" id="tyt-fen-d" min="0" max="20" placeholder="0" class="col-span-2 bg-slate-950 border border-slate-800 rounded-lg p-2 text-center text-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none">
-                    <input type="number" id="tyt-fen-y" min="0" max="20" placeholder="0" class="col-span-2 bg-slate-950 border border-slate-800 rounded-lg p-2 text-center text-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none">
-                    <input type="number" id="tyt-fen-b" min="0" max="20" placeholder="0" class="col-span-2 bg-slate-950 border border-slate-800 rounded-lg p-2 text-center text-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none">
-                </div>
-            </div>
-
-            <!-- AYT Content -->
-            <div id="tab-ayt" class="space-y-3 hidden">
-                <div class="grid grid-cols-12 gap-2 text-xs font-semibold text-slate-400 px-1 mb-1">
-                    <span class="col-span-6">Ders Adı</span>
-                    <span class="col-span-2 text-center text-emerald-400">Doğru</span>
-                    <span class="col-span-2 text-center text-rose-400">Yanlış</span>
-                    <span class="col-span-2 text-center text-slate-400">Boş</span>
-                </div>
-                <div class="grid grid-cols-12 gap-2 items-center">
-                    <label class="col-span-6 text-sm font-medium text-slate-300">AYT Matematik (40)</label>
-                    <input type="number" id="ayt-mat-d" min="0" max="40" placeholder="0" class="col-span-2 bg-slate-950 border border-slate-800 rounded-lg p-2 text-center text-sm focus:ring-2 focus:ring-cyan-500 focus:outline-none">
-                    <input type="number" id="ayt-mat-y" min="0" max="40" placeholder="0" class="col-span-2 bg-slate-950 border border-slate-800 rounded-lg p-2 text-center text-sm focus:ring-2 focus:ring-cyan-500 focus:outline-none">
-                    <input type="number" id="ayt-mat-b" min="0" max="40" placeholder="0" class="col-span-2 bg-slate-950 border border-slate-800 rounded-lg p-2 text-center text-sm focus:ring-2 focus:ring-cyan-500 focus:outline-none">
-                </div>
-                <div class="grid grid-cols-12 gap-2 items-center">
-                    <label class="col-span-6 text-sm font-medium text-slate-300">Fizik (14)</label>
-                    <input type="number" id="ayt-fiz-d" min="0" max="14" placeholder="0" class="col-span-2 bg-slate-950 border border-slate-800 rounded-lg p-2 text-center text-sm focus:ring-2 focus:ring-cyan-500 focus:outline-none">
-                    <input type="number" id="ayt-fiz-y" min="0" max="14" placeholder="0" class="col-span-2 bg-slate-950 border border-slate-800 rounded-lg p-2 text-center text-sm focus:ring-2 focus:ring-cyan-500 focus:outline-none">
-                    <input type="number" id="ayt-fiz-b" min="0" max="14" placeholder="0" class="col-span-2 bg-slate-950 border border-slate-800 rounded-lg p-2 text-center text-sm focus:ring-2 focus:ring-cyan-500 focus:outline-none">
-                </div>
-                <div class="grid grid-cols-12 gap-2 items-center">
-                    <label class="col-span-6 text-sm font-medium text-slate-300">Kimya (13)</label>
-                    <input type="number" id="ayt-kim-d" min="0" max="13" placeholder="0" class="col-span-2 bg-slate-950 border border-slate-800 rounded-lg p-2 text-center text-sm focus:ring-2 focus:ring-cyan-500 focus:outline-none">
-                    <input type="number" id="ayt-kim-y" min="0" max="13" placeholder="0" class="col-span-2 bg-slate-950 border border-slate-800 rounded-lg p-2 text-center text-sm focus:ring-2 focus:ring-cyan-500 focus:outline-none">
-                    <input type="number" id="ayt-kim-b" min="0" max="13" placeholder="0" class="col-span-2 bg-slate-950 border border-slate-800 rounded-lg p-2 text-center text-sm focus:ring-2 focus:ring-cyan-500 focus:outline-none">
-                </div>
-                <div class="grid grid-cols-12 gap-2 items-center">
-                    <label class="col-span-6 text-sm font-medium text-slate-300">Biyoloji (13)</label>
-                    <input type="number" id="ayt-biyo-d" min="0" max="13" placeholder="0" class="col-span-2 bg-slate-950 border border-slate-800 rounded-lg p-2 text-center text-sm focus:ring-2 focus:ring-cyan-500 focus:outline-none">
-                    <input type="number" id="ayt-biyo-y" min="0" max="13" placeholder="0" class="col-span-2 bg-slate-950 border border-slate-800 rounded-lg p-2 text-center text-sm focus:ring-2 focus:ring-cyan-500 focus:outline-none">
-                    <input type="number" id="ayt-biyo-b" min="0" max="13" placeholder="0" class="col-span-2 bg-slate-950 border border-slate-800 rounded-lg p-2 text-center text-sm focus:ring-2 focus:ring-cyan-500 focus:outline-none">
-                </div>
-            </div>
-
-            <!-- Meta Options -->
-            <div class="pt-2 border-t border-slate-800 grid grid-cols-1 sm:grid-cols-3 gap-3">
+            <form id="net-form" onsubmit="denemeEkle(event)" class="grid grid-cols-1 sm:grid-cols-3 gap-3">
                 <div>
-                    <label class="block text-xs font-semibold text-slate-400 mb-1">Deneme Adı</label>
-                    <input type="text" id="deneme-adi" placeholder="Örn: Özdebir TYT-3" class="w-full bg-slate-950 border border-slate-800 rounded-lg p-2 text-xs focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+                    <label class="block text-xs font-semibold text-slate-300 mb-1">Deneme Adı / Tarih</label>
+                    <input type="text" id="deneme-adi" placeholder="Örn: Özdebir TYT 1" required class="w-full bg-slate-950 border border-slate-800 rounded-xl p-2.5 text-xs text-slate-100 focus:ring-2 focus:ring-indigo-500 focus:outline-none">
                 </div>
                 <div>
-                    <label class="block text-xs font-semibold text-slate-400 mb-1">OBP (30-100)</label>
-                    <input type="number" id="obp-puan" min="30" max="100" value="85" class="w-full bg-slate-950 border border-slate-800 rounded-lg p-2 text-xs focus:ring-2 focus:ring-indigo-500 focus:outline-none">
-                </div>
-                <div>
-                    <label class="block text-xs font-semibold text-slate-400 mb-1">Hedef Bölüm</label>
-                    <select id="hedef-secim" onchange="hesapla()" class="w-full bg-slate-950 border border-slate-800 rounded-lg p-2 text-xs focus:ring-2 focus:ring-indigo-500 focus:outline-none text-slate-200">
-                        <option value="tip">Tıp Fakültesi (100 TYT / 68 AYT)</option>
-                        <option value="ceng">Bilgisayar Müh. (92 TYT / 60 AYT)</option>
-                        <option value="ee">Elektrik-Elektronik (88 TYT / 55 AYT)</option>
-                        <option value="dis">Diş Hekimliği (85 TYT / 52 AYT)</option>
-                        <option value="mimarlik">Mimarlık (70 TYT / 38 AYT)</option>
+                    <label class="block text-xs font-semibold text-slate-300 mb-1">Sınav Türü</label>
+                    <select id="deneme-turu" class="w-full bg-slate-950 border border-slate-800 rounded-xl p-2.5 text-xs text-slate-100 focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+                        <option value="TYT">TYT</option>
+                        <option value="AYT Sayısal">AYT Sayısal</option>
+                        <option value="AYT Eşit Ağırlık">AYT Eşit Ağırlık</option>
                     </select>
                 </div>
-            </div>
-
-            <!-- Action Buttons -->
-            <div class="flex flex-col sm:flex-row gap-3 pt-2">
-                <button onclick="hesapla()" class="flex-1 bg-indigo-600 hover:bg-indigo-500 text-white font-bold py-2.5 rounded-xl text-sm shadow-md transition">
-                    Hesapla & Hedefe Analiz Et
-                </button>
-                <button onclick="kaydet()" class="flex-1 bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-2.5 rounded-xl text-sm shadow-md transition">
-                    İlerlemeyi Kaydet
-                </button>
-            </div>
+                <div>
+                    <label class="block text-xs font-semibold text-slate-300 mb-1">Toplam Net</label>
+                    <input type="number" step="0.25" id="deneme-net" placeholder="Örn: 85.50" required class="w-full bg-slate-950 border border-slate-800 rounded-xl p-2.5 text-xs text-slate-100 focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+                </div>
+                <div class="sm:col-span-3 flex justify-end">
+                    <button type="submit" class="bg-indigo-600 hover:bg-indigo-500 text-white font-bold py-2.5 px-6 rounded-xl text-xs shadow-md transition">
+                        + Denemeyi Kaydet
+                    </button>
+                </div>
+            </form>
         </div>
 
-        <!-- Result Section -->
-        <section class="bg-slate-900 border border-slate-800 rounded-2xl p-5 shadow-xl space-y-4">
-            <h3 class="text-xs font-bold text-slate-400 uppercase tracking-wider">Hesaplama Sonuçları</h3>
-            
-            <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 text-center">
-                <div class="bg-slate-950 p-3 rounded-xl border border-slate-800/80">
-                    <p class="text-[10px] text-slate-400 uppercase">TYT Net</p>
-                    <p id="res-tyt-net" class="text-xl font-black text-indigo-400 mt-0.5">0.00</p>
-                </div>
-                <div class="bg-slate-950 p-3 rounded-xl border border-slate-800/80">
-                    <p class="text-[10px] text-slate-400 uppercase">AYT Net</p>
-                    <p id="res-ayt-net" class="text-xl font-black text-cyan-400 mt-0.5">0.00</p>
-                </div>
-                <div class="bg-slate-950 p-3 rounded-xl border border-slate-800/80">
-                    <p class="text-[10px] text-slate-400 uppercase">Yerleştirme Puanı</p>
-                    <p id="res-yerlesme-puan" class="text-xl font-black text-emerald-400 mt-0.5">100.00</p>
-                </div>
-                <div class="bg-slate-950 p-3 rounded-xl border border-slate-800/80">
-                    <p class="text-[10px] text-slate-400 uppercase">Tahmini Sıra</p>
-                    <p id="rank-2025" class="text-lg font-black text-amber-300 mt-0.5">-</p>
-                </div>
-            </div>
-
-            <div class="bg-indigo-950/30 border border-indigo-500/20 rounded-xl p-3 text-xs text-slate-300 leading-relaxed" id="target-analysis-text">
-                Formu doldurup "Hesapla" butonuna bastığınızda seçtiğiniz hedef bölüm için durum analizi burada görüntülenecektir.
-            </div>
-        </section>
-
-        <!-- Chart Section -->
-        <section class="bg-slate-900 border border-slate-800 rounded-2xl p-5 shadow-xl space-y-3">
-            <h3 class="text-xs font-bold text-slate-400 uppercase tracking-wider">Net Gelişim Grafiğim</h3>
-            <div class="relative w-full h-56">
-                <canvas id="netChart"></canvas>
-            </div>
-        </section>
-
-        <!-- History Section -->
-        <section class="bg-slate-900 border border-slate-800 rounded-2xl p-5 shadow-xl space-y-3">
+        <!-- Kayıtlı Denemeler Listesi -->
+        <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 shadow-xl space-y-3">
             <div class="flex items-center justify-between">
-                <h3 class="text-xs font-bold text-slate-400 uppercase tracking-wider">Kaydedilen Denemeler</h3>
-                <button onclick="gecmisiTemizle()" class="text-[10px] bg-rose-500/10 hover:bg-rose-500/20 text-rose-400 font-semibold px-2.5 py-1 rounded-lg border border-rose-500/20 transition">
-                    Temizle
-                </button>
+                <h2 class="text-xs font-bold text-slate-400 uppercase tracking-wider">Geçmiş Denemelerim</h2>
+                <button onclick="tumunuTemizle()" class="text-[10px] text-rose-400 hover:underline">Tümünü Sil</button>
             </div>
 
             <div class="overflow-x-auto">
                 <table class="w-full text-left text-xs text-slate-300">
                     <thead class="text-[10px] text-slate-500 bg-slate-950 uppercase tracking-wider">
                         <tr>
-                            <th class="px-3 py-2 rounded-l-lg">Tarih</th>
-                            <th class="px-3 py-2">Deneme</th>
-                            <th class="px-3 py-2 text-center">TYT</th>
-                            <th class="px-3 py-2 text-center">AYT</th>
-                            <th class="px-3 py-2 text-center">Puan</th>
-                            <th class="px-3 py-2 text-right rounded-r-lg">Sıra</th>
+                            <th class="px-3 py-2.5 rounded-l-lg">Deneme Adı</th>
+                            <th class="px-3 py-2.5 text-center">Tür</th>
+                            <th class="px-3 py-2.5 text-center">Net</th>
+                            <th class="px-3 py-2.5 text-right rounded-r-lg">İşlem</th>
                         </tr>
                     </thead>
-                    <tbody id="gecmis-listesi" class="divide-y divide-slate-800/50">
-                        <!-- Dynamic Rows -->
+                    <tbody id="deneme-listesi" class="divide-y divide-slate-800/50">
+                        <!-- Dynamic items -->
                     </tbody>
                 </table>
             </div>
-        </section>
+        </div>
 
     </div>
 
-    <!-- JavaScript Logic -->
+    <!-- Simple Footer -->
+    <footer class="mt-12 pt-4 text-center border-t border-slate-800/60">
+        <p class="text-[10px] text-slate-600">© 2026 Akıllı Web Araçları. Tüm hakları saklıdır.</p>
+    </footer>
+
+    <!-- JavaScript Engine -->
     <script>
-        // TAB SWITCHING LOGIC
-        function switchTab(tab) {
-            const tytContent = document.getElementById('tab-tyt');
-            const aytContent = document.getElementById('tab-ayt');
-            const tytBtn = document.getElementById('tab-tyt-btn');
-            const aytBtn = document.getElementById('tab-ayt-btn');
+        let denemeler = JSON.parse(localStorage.getItem('yks_denemelerim')) || [];
 
-            if (tab === 'tyt') {
-                tytContent.classList.remove('hidden');
-                aytContent.classList.add('hidden');
-                tytBtn.className = "flex-1 py-2 rounded-xl font-bold text-sm bg-indigo-600 text-white transition";
-                aytBtn.className = "flex-1 py-2 rounded-xl font-bold text-sm bg-slate-800 text-slate-400 hover:text-white transition";
-            } else {
-                aytContent.classList.remove('hidden');
-                tytContent.classList.add('hidden');
-                aytBtn.className = "flex-1 py-2 rounded-xl font-bold text-sm bg-cyan-600 text-white transition";
-                tytBtn.className = "flex-1 py-2 rounded-xl font-bold text-sm bg-slate-800 text-slate-400 hover:text-white transition";
+        function kaydetVeGoster() {
+            localStorage.setItem('yks_denemelerim', JSON.stringify(denemeler));
+            listeyiGoster();
+        }
+
+        function denemeEkle(e) {
+            e.preventDefault();
+            const adi = document.getElementById('deneme-adi').value;
+            const turu = document.getElementById('deneme-turu').value;
+            const net = parseFloat(document.getElementById('deneme-net').value);
+
+            if (adi && !isNaN(net)) {
+                denemeler.push({
+                    id: Date.now(),
+                    adi: adi,
+                    turu: turu,
+                    net: net
+                });
+                document.getElementById('net-form').reset();
+                kaydetVeGoster();
             }
         }
 
-        // COUNTDOWN TIMER LOGIC
-        function initCountdown() {
-            const yksDate = new Date('June 20, 2027 10:15:00').getTime();
-            function updateTimer() {
-                const now = new Date().getTime();
-                const diff = yksDate - now;
-                if (diff <= 0) return;
-
-                const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-                const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-                const seconds = Math.floor((diff % (1000 * 60)) / 1000);
-
-                document.getElementById('cd-days').innerText = days < 10 ? '0' + days : days;
-                document.getElementById('cd-hours').innerText = hours < 10 ? '0' + hours : hours;
-                document.getElementById('cd-minutes').innerText = minutes < 10 ? '0' + minutes : minutes;
-                document.getElementById('cd-seconds').innerText = seconds < 10 ? '0' + seconds : seconds;
-            }
-            updateTimer();
-            setInterval(updateTimer, 1000);
+        function denemeSil(id) {
+            denemeler = denemeler.filter(d => d.id !== id);
+            kaydetVeGoster();
         }
 
-        // POMODORO TIMER LOGIC
-        let pomoTime = 25 * 60;
-        let pomoInterval = null;
-        let isPomoRunning = false;
-        let isWorkSession = true;
-
-        function updatePomoDisplay() {
-            const m = Math.floor(pomoTime / 60);
-            const s = pomoTime % 60;
-            document.getElementById('pomo-display').innerText = `${m < 10 ? '0' + m : m}:${s < 10 ? '0' + s : s}`;
-        }
-
-        function togglePomodoro() {
-            const btn = document.getElementById('pomo-btn');
-            if (isPomoRunning) {
-                clearInterval(pomoInterval);
-                isPomoRunning = false;
-                btn.innerText = "Devam Et";
-                btn.className = "flex-1 bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-2 px-3 rounded-xl text-xs transition";
-            } else {
-                isPomoRunning = true;
-                btn.innerText = "Durdur";
-                btn.className = "flex-1 bg-amber-600 hover:bg-amber-500 text-white font-bold py-2 px-3 rounded-xl text-xs transition";
-                pomoInterval = setInterval(() => {
-                    if (pomoTime > 0) {
-                        pomoTime--;
-                        updatePomoDisplay();
-                    } else {
-                        clearInterval(pomoInterval);
-                        isPomoRunning = false;
-                        if (isWorkSession) {
-                            alert("25 Dk Odaklanma Bitti! 5 Dk Mola Zamanı.");
-                            isWorkSession = false;
-                            pomoTime = 5 * 60;
-                            document.getElementById('pomo-status-text').innerText = "5 Dk Mola";
-                        } else {
-                            alert("Mola Bitti! Çalışmaya Devam.");
-                            isWorkSession = true;
-                            pomoTime = 25 * 60;
-                            document.getElementById('pomo-status-text').innerText = "25 Dk Odaklanma";
-                        }
-                        btn.innerText = "Başlat";
-                        btn.className = "flex-1 bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-2 px-3 rounded-xl text-xs transition";
-                        updatePomoDisplay();
-                    }
-                }, 1000);
+        function tumunuTemizle() {
+            if (confirm("Tüm deneme kayıtlarınız silinsin mi?")) {
+                denemeler = [];
+                kaydetVeGoster();
             }
         }
 
-        function resetPomodoro() {
-            clearInterval(pomoInterval);
-            isPomoRunning = false;
-            isWorkSession = true;
-            pomoTime = 25 * 60;
-            document.getElementById('pomo-btn').innerText = "Başlat";
-            document.getElementById('pomo-btn').className = "flex-1 bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-2 px-3 rounded-xl text-xs transition";
-            document.getElementById('pomo-status-text').innerText = "25 Dk Odaklanma";
-            updatePomoDisplay();
-        }
+        function listeyiGoster() {
+            const tbody = document.getElementById('deneme-listesi');
 
-        // CALCULATIONS & STORAGE
-        function calcNet(cId, wId) {
-            const d = parseFloat(document.getElementById(cId).value) || 0;
-            const y = parseFloat(document.getElementById(wId).value) || 0;
-            const net = d - (y / 4);
-            return net < 0 ? 0 : net;
-        }
-
-        function predictRank(puan) {
-            if (puan <= 150) return "Baraj Altı";
-            const anchors = [
-                {p:540, r:100}, {p:510, r:2500}, {p:480, r:9500}, 
-                {p:440, r:24000}, {p:400, r:48000}, {p:350, r:95000}, 
-                {p:300, r:165000}, {p:250, r:270000}, {p:200, r:420000}
-            ];
-            if (puan >= anchors[0].p) return `~${anchors[0].r}`;
-            if (puan <= anchors[anchors.length - 1].p) return `>${anchors[anchors.length - 1].r}`;
-
-            for (let i = 0; i < anchors.length - 1; i++) {
-                if (puan <= anchors[i].p && puan >= anchors[i+1].p) {
-                    const ratio = (anchors[i].p - puan) / (anchors[i].p - anchors[i+1].p);
-                    const rank = Math.round(anchors[i].r + ratio * (anchors[i+1].r - anchors[i].r));
-                    return rank.toLocaleString('tr-TR');
-                }
-            }
-            return "-";
-        }
-
-        const targets = {
-            tip: { name: "Tıp Fakültesi", tyt: 100, ayt: 68 },
-            ceng: { name: "Bilgisayar Müh.", tyt: 92, ayt: 60 },
-            ee: { name: "Elektrik-Elektronik", tyt: 88, ayt: 55 },
-            dis: { name: "Diş Hekimliği", tyt: 85, ayt: 52 },
-            mimarlik: { name: "Mimarlık", tyt: 70, ayt: 38 }
-        };
-
-        function hesapla() {
-            const tytT = calcNet('tyt-turkce-d', 'tyt-turkce-y');
-            const tytS = calcNet('tyt-sosyal-d', 'tyt-sosyal-y');
-            const tytM = calcNet('tyt-mat-d', 'tyt-mat-y');
-            const tytF = calcNet('tyt-fen-d', 'tyt-fen-y');
-            const totalTyt = tytT + tytS + tytM + tytF;
-
-            const aytM = calcNet('ayt-mat-d', 'ayt-mat-y');
-            const aytF = calcNet('ayt-fiz-d', 'ayt-fiz-y');
-            const aytK = calcNet('ayt-kim-d', 'ayt-kim-y');
-            const aytB = calcNet('ayt-biyo-d', 'ayt-biyo-y');
-            const totalAyt = aytM + aytF + aytK + aytB;
-
-            const tytPuan = 100 + (tytT * 3.3) + (tytS * 3.4) + (tytM * 3.3) + (tytF * 3.4);
-            const aytPuan = (aytM * 3.0) + (aytF * 2.85) + (aytK * 3.07) + (aytB * 3.07);
-            
-            let ham = (tytPuan * 0.4) + (aytPuan * 0.6) + 100;
-            if (ham > 500) ham = 500;
-
-            const obp = parseFloat(document.getElementById('obp-puan').value) || 85;
-            const yerlPuan = ham + (obp * 0.6);
-            const rank = predictRank(yerlPuan);
-
-            document.getElementById('res-tyt-net').innerText = totalTyt.toFixed(2);
-            document.getElementById('res-ayt-net').innerText = totalAyt.toFixed(2);
-            document.getElementById('res-yerlesme-puan').innerText = yerlPuan.toFixed(2);
-            document.getElementById('rank-2025').innerText = rank;
-
-            const targetKey = document.getElementById('hedef-secim').value;
-            const tObj = targets[targetKey];
-            const tDiff = totalTyt - tObj.tyt;
-            const aDiff = totalAyt - tObj.ayt;
-
-            const tMsg = tDiff >= 0 ? `<span class="text-emerald-400 font-semibold">+${tDiff.toFixed(2)} TYT önde</span>` : `<span class="text-rose-400 font-semibold">${Math.abs(tDiff).toFixed(2)} TYT eksik</span>`;
-            const aMsg = aDiff >= 0 ? `<span class="text-emerald-400 font-semibold">+${aDiff.toFixed(2)} AYT önde</span>` : `<span class="text-rose-400 font-semibold">${Math.abs(aDiff).toFixed(2)} AYT eksik</span>`;
-
-            document.getElementById('target-analysis-text').innerHTML = `
-                Hedef: <strong>${tObj.name}</strong> (${tObj.tyt} TYT / ${tObj.ayt} AYT).<br>
-                Mevcut Durum: ${tMsg} ve ${aMsg}.
-            `;
-
-            return { tytNet: totalTyt.toFixed(2), aytNet: totalAyt.toFixed(2), yerlesmePuan: yerlPuan.toFixed(2), rank: rank };
-        }
-
-        let chartInstance = null;
-
-        function kaydet() {
-            const res = hesapla();
-            const denemeAd = document.getElementById('deneme-adi').value.trim() || "Genel Deneme";
-            const tarih = new Date().toLocaleDateString('tr-TR', { day: '2-digit', month: '2-digit' });
-
-            const yeniKayit = {
-                id: Date.now(),
-                tarih: tarih,
-                ad: denemeAd,
-                tytNet: parseFloat(res.tytNet),
-                aytNet: parseFloat(res.aytNet),
-                puan: res.yerlesmePuan,
-                rank: res.rank
-            };
-
-            const mevcut = JSON.parse(localStorage.getItem('yks_deneme_gecmis')) || [];
-            mevcut.push(yeniKayit);
-            localStorage.setItem('yks_deneme_gecmis', JSON.stringify(mevcut));
-
-            document.getElementById('deneme-adi').value = '';
-            renderAll();
-        }
-
-        function renderGecmis() {
-            const kayitlar = JSON.parse(localStorage.getItem('yks_deneme_gecmis')) || [];
-            const tbody = document.getElementById('gecmis-listesi');
-
-            if (kayitlar.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="6" class="text-center py-4 text-slate-500 italic">Henüz kaydedilmiş deneme yok.</td></tr>`;
+            if (denemeler.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="4" class="text-center py-6 text-slate-500 italic">Henüz kaydedilmiş deneme yok.</td></tr>`;
                 return;
             }
 
-            const reversed = [...kayitlar].reverse();
-            tbody.innerHTML = reversed.map(k => `
+            tbody.innerHTML = denemeler.map(item => `
                 <tr class="hover:bg-slate-800/40 transition">
-                    <td class="px-3 py-2 font-mono text-slate-400">${k.tarih}</td>
-                    <td class="px-3 py-2 font-medium text-slate-200">${k.ad}</td>
-                    <td class="px-3 py-2 text-center font-semibold text-indigo-400">${k.tytNet}</td>
-                    <td class="px-3 py-2 text-center font-semibold text-cyan-400">${k.aytNet}</td>
-                    <td class="px-3 py-2 text-center font-bold text-emerald-400">${k.puan}</td>
-                    <td class="px-3 py-2 text-right font-semibold text-amber-300">${k.rank || '-'}</td>
+                    <td class="px-3 py-2.5 font-bold text-slate-200">${item.adi}</td>
+                    <td class="px-3 py-2.5 text-center text-indigo-400 font-mono">${item.turu}</td>
+                    <td class="px-3 py-2.5 text-center font-bold text-emerald-400">${item.net} Net</td>
+                    <td class="px-3 py-2.5 text-right">
+                        <button onclick="denemeSil(${item.id})" class="text-rose-400 hover:text-rose-300 font-bold px-2 py-1 text-xs">Sil</button>
+                    </td>
                 </tr>
             `).join('');
         }
 
-        function renderChart() {
-            const kayitlar = JSON.parse(localStorage.getItem('yks_deneme_gecmis')) || [];
-            const ctx = document.getElementById('netChart').getContext('2d');
-
-            if (chartInstance) chartInstance.destroy();
-
-            chartInstance = new Chart(ctx, {
-                type: 'line',
-                data: {
-                    labels: kayitlar.map(k => `${k.ad} (${k.tarih})`),
-                    datasets: [
-                        { label: 'TYT Net', data: kayitlar.map(k => k.tytNet), borderColor: '#818cf8', backgroundColor: 'rgba(129, 140, 248, 0.1)', borderWidth: 2, tension: 0.3, fill: true },
-                        { label: 'AYT Net', data: kayitlar.map(k => k.aytNet), borderColor: '#22d3ee', backgroundColor: 'rgba(34, 211, 238, 0.1)', borderWidth: 2, tension: 0.3, fill: true }
-                    ]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: { legend: { labels: { color: '#cbd5e1', font: { size: 11 } } } },
-                    scales: {
-                        x: { ticks: { color: '#64748b' }, grid: { color: '#1e293b' } },
-                        y: { ticks: { color: '#64748b' }, grid: { color: '#1e293b' }, beginAtZero: true }
-                    }
-                }
-            });
-        }
-
-        function gecmisiTemizle() {
-            if (confirm("Deneme geçmişi silinsin mi?")) {
-                localStorage.removeItem('yks_deneme_gecmis');
-                renderAll();
-            }
-        }
-
-        function renderAll() {
-            renderGecmis();
-            renderChart();
-        }
-
         window.onload = function() {
-            initCountdown();
-            renderAll();
+            listeyiGoster();
         };
     </script>
-<!-- Tercih Robotu Yönlendirme Kartı -->
-<div class="max-w-4xl mx-auto mt-8 mb-4 text-center">
-    <div class="bg-slate-900 border border-slate-800 rounded-2xl p-4 shadow-lg flex flex-col sm:flex-row items-center justify-between gap-4">
-        <div class="text-left">
-            <h4 class="text-sm font-bold text-amber-400">🎓 Tercih Döneminde misiniz?</h4>
-            <p class="text-xs text-slate-400 mt-0.5">Sıralamanıza en uygun üniversite programlarını listelemek için robotumuzu kullanın.</p>
-        </div>
-        <a href="https://yks-tercih-robotu-iota.vercel.app" target="_blank" class="bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold px-4 py-2 rounded-xl text-xs transition whitespace-nowrap">
-            Tercih Robotuna Git →
-        </a>
-    </div>
-</div>    
 </body>
 </html>
