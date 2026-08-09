@@ -172,7 +172,7 @@
                 </div>
                 <div>
                     <label class="block text-xs font-semibold text-slate-400 mb-1">OBP (30-100)</label>
-                    <input type="number" id="obp-puan" min="30" max="100" value="85" class="w-full bg-slate-950 border border-slate-800 rounded-lg p-2 text-xs focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+                    <input type="number" id="obp-puan" min="30" max="100" value="100" class="w-full bg-slate-950 border border-slate-800 rounded-lg p-2 text-xs focus:ring-2 focus:ring-indigo-500 focus:outline-none">
                 </div>
                 <div>
                     <label class="block text-xs font-semibold text-slate-400 mb-1">Hedef Bölüm</label>
@@ -375,31 +375,31 @@
             return net < 0 ? 0 : net;
         }
 
-        // Güncellenmiş Gerçekçi Sıralama Tahmin Modülü
-        function predictRank(puan) {
-            if (puan <= 150) return "Baraj Altı";
+        // Doğru ÖSYM Yerleştirme Puanı (Max 560: 500 Ham + 60 OBP) Sıralama Simülasyonu
+        function predictRank(yerlesmePuan) {
+            if (yerlesmePuan <= 150) return "Baraj Altı";
             
-            // Yerleştirme Puanı (Max 560: 500 Ham + 60 OBP) Referans Tablosu
+            // Gerçek YKS Sayısal Sıralama Referans Haritası
             const anchors = [
-                {p: 558, r: 1},
-                {p: 550, r: 150},
-                {p: 535, r: 1200},
-                {p: 515, r: 5000}, 
-                {p: 490, r: 15000},
-                {p: 460, r: 32000},
-                {p: 420, r: 62000},
-                {p: 370, r: 120000},
-                {p: 310, r: 210000},
-                {p: 250, r: 350000},
-                {p: 180, r: 600000}
+                {p: 558.0, r: 1},
+                {p: 550.0, r: 100},
+                {p: 535.0, r: 1200},
+                {p: 515.0, r: 5000}, 
+                {p: 490.0, r: 15000},
+                {p: 460.0, r: 32000},
+                {p: 420.0, r: 62000},
+                {p: 370.0, r: 120000},
+                {p: 310.0, r: 210000},
+                {p: 250.0, r: 350000},
+                {p: 180.0, r: 600000}
             ];
 
-            if (puan >= anchors[0].p) return "1 - 50";
-            if (puan <= anchors[anchors.length - 1].p) return `>${anchors[anchors.length - 1].r}`;
+            if (yerlesmePuan >= 558.0) return "1 - 50";
+            if (yerlesmePuan <= anchors[anchors.length - 1].p) return `>${anchors[anchors.length - 1].r}`;
 
             for (let i = 0; i < anchors.length - 1; i++) {
-                if (puan <= anchors[i].p && puan >= anchors[i+1].p) {
-                    const ratio = (anchors[i].p - puan) / (anchors[i].p - anchors[i+1].p);
+                if (yerlesmePuan <= anchors[i].p && yerlesmePuan >= anchors[i+1].p) {
+                    const ratio = (anchors[i].p - yerlesmePuan) / (anchors[i].p - anchors[i+1].p);
                     const rank = Math.round(anchors[i].r + ratio * (anchors[i+1].r - anchors[i].r));
                     return rank.toLocaleString('tr-TR');
                 }
@@ -428,16 +428,17 @@
             const aytB = calcNet('ayt-biyo-d', 'ayt-biyo-y');
             const totalAyt = aytM + aytF + aytK + aytB;
 
-            // ÖSYM Standart Katsayıları (ÖS Ham Puan Formülü)
-            const tytPuan = 100 + (tytT * 3.3) + (tytS * 3.4) + (tytM * 3.3) + (tytF * 3.4);
-            const aytPuan = (aytM * 3.0) + (aytF * 2.85) + (aytK * 3.07) + (aytB * 3.07);
+            // ÖSYM Standart Katsayı Hesabı (Full Net = 500 Ham Puan)
+            // TYT Katkısı (%40) + AYT Katkısı (%60) + Taban Puan (100)
+            const tytPuanKatki = (tytT * 1.32) + (tytS * 1.36) + (tytM * 1.32) + (tytF * 1.36); // Max 160 Puan
+            const aytPuanKatki = (aytM * 3.0) + (aytF * 2.85) + (aytK * 3.07) + (aytB * 3.07); // Max 240 Puan
             
-            // TYT %40 + AYT %60 Hesabı
-            let ham = (tytPuan * 0.4) + (aytPuan * 0.6) + 100;
-            if (ham > 500) ham = 500;
+            let hamPuan = 100 + tytPuanKatki + aytPuanKatki;
+            if (hamPuan > 500) hamPuan = 500;
 
+            // OBP Ekleme (Max 100 OBP * 0.6 = 60 Puan -> Toplam Max Yerleştirme 560 Puan)
             const obp = parseFloat(document.getElementById('obp-puan').value) || 85;
-            const yerlPuan = ham + (obp * 0.6);
+            const yerlPuan = hamPuan + (obp * 0.6);
             const rank = predictRank(yerlPuan);
 
             document.getElementById('res-tyt-net').innerText = totalTyt.toFixed(2);
