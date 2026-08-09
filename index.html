@@ -375,14 +375,26 @@
             return net < 0 ? 0 : net;
         }
 
+        // Güncellenmiş Gerçekçi Sıralama Tahmin Modülü
         function predictRank(puan) {
             if (puan <= 150) return "Baraj Altı";
+            
+            // Yerleştirme Puanı (Max 560: 500 Ham + 60 OBP) Referans Tablosu
             const anchors = [
-                {p:540, r:100}, {p:510, r:2500}, {p:480, r:9500}, 
-                {p:440, r:24000}, {p:400, r:48000}, {p:350, r:95000}, 
-                {p:300, r:165000}, {p:250, r:270000}, {p:200, r:420000}
+                {p: 558, r: 1},
+                {p: 550, r: 150},
+                {p: 535, r: 1200},
+                {p: 515, r: 5000}, 
+                {p: 490, r: 15000},
+                {p: 460, r: 32000},
+                {p: 420, r: 62000},
+                {p: 370, r: 120000},
+                {p: 310, r: 210000},
+                {p: 250, r: 350000},
+                {p: 180, r: 600000}
             ];
-            if (puan >= anchors[0].p) return `~${anchors[0].r}`;
+
+            if (puan >= anchors[0].p) return "1 - 50";
             if (puan <= anchors[anchors.length - 1].p) return `>${anchors[anchors.length - 1].r}`;
 
             for (let i = 0; i < anchors.length - 1; i++) {
@@ -416,9 +428,11 @@
             const aytB = calcNet('ayt-biyo-d', 'ayt-biyo-y');
             const totalAyt = aytM + aytF + aytK + aytB;
 
+            // ÖSYM Standart Katsayıları (ÖS Ham Puan Formülü)
             const tytPuan = 100 + (tytT * 3.3) + (tytS * 3.4) + (tytM * 3.3) + (tytF * 3.4);
             const aytPuan = (aytM * 3.0) + (aytF * 2.85) + (aytK * 3.07) + (aytB * 3.07);
             
+            // TYT %40 + AYT %60 Hesabı
             let ham = (tytPuan * 0.4) + (aytPuan * 0.6) + 100;
             if (ham > 500) ham = 500;
 
