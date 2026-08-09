@@ -13,7 +13,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="google-site-verification" content="mX0Knj2KaZBOFZZVqyVL-4lVLQ27l4CRtPeqz-NDzmI" />
-    <title>YKS Takip Panelim - Net, Konu Takip & Pomodoro</title>
+    <title>YKS Takip Panelim - Günlük Çalışma Üssü</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Chart.js CDN -->
@@ -23,20 +23,36 @@
 
     <div class="max-w-4xl mx-auto w-full space-y-6">
         
-        <!-- Header -->
-        <header class="text-center space-y-2">
-            <h1 class="text-3xl md:text-4xl font-black text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 via-cyan-400 to-emerald-400">
-                YKS 2027 Başarı Paneli
-            </h1>
-            <p class="text-slate-400 text-xs md:text-sm">Gelişimini grafiklerle gör, konularını tamamla, hedeflerine ulaş.</p>
-            
+        <!-- Header & Streak Bar -->
+        <header class="space-y-3">
+            <div class="flex flex-col sm:flex-row items-center justify-between gap-3 border-b border-slate-800 pb-3">
+                <div class="text-center sm:text-left space-y-1">
+                    <h1 class="text-2xl md:text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 via-cyan-400 to-emerald-400">
+                        🚀 YKS 2027 Çalışma Üssü
+                    </h1>
+                    <p class="text-slate-400 text-xs">Hedeflerine her gün bir adım daha yaklaş.</p>
+                </div>
+
+                <!-- STREAK (SERİ) WIDGET -->
+                <div class="flex items-center gap-2 bg-gradient-to-r from-amber-500/10 to-orange-500/10 border border-orange-500/20 px-3 py-1.5 rounded-xl">
+                    <span class="text-xl">🔥</span>
+                    <div>
+                        <span id="streak-count" class="text-sm font-black text-orange-400">0</span>
+                        <span class="text-[10px] text-slate-400 font-semibold block uppercase tracking-wider">Günlük Seri</span>
+                    </div>
+                </div>
+            </div>
+
             <!-- Ana Modül Sekmeleri -->
-            <div class="flex justify-center gap-2 pt-3">
-                <button onclick="mainTabSwitch('net')" id="main-tab-net" class="px-4 py-2 rounded-xl text-xs font-bold bg-indigo-600 text-white shadow-md transition">
-                    📈 Net & Deneme Takibi
+            <div class="flex flex-wrap justify-center gap-2 pt-1">
+                <button onclick="mainTabSwitch('gunluk')" id="main-tab-gunluk" class="px-3.5 py-2 rounded-xl text-xs font-bold bg-amber-500 text-slate-950 shadow-md transition">
+                    🎯 Günlük Soru Takibi
                 </button>
-                <button onclick="mainTabSwitch('konu')" id="main-tab-konu" class="px-4 py-2 rounded-xl text-xs font-bold bg-slate-900 text-slate-400 hover:text-white border border-slate-800 transition">
-                    📚 Konu Takip Listesi
+                <button onclick="mainTabSwitch('net')" id="main-tab-net" class="px-3.5 py-2 rounded-xl text-xs font-bold bg-slate-900 text-slate-400 hover:text-white border border-slate-800 transition">
+                    📈 Deneme & Netler
+                </button>
+                <button onclick="mainTabSwitch('konu')" id="main-tab-konu" class="px-3.5 py-2 rounded-xl text-xs font-bold bg-slate-900 text-slate-400 hover:text-white border border-slate-800 transition">
+                    📚 Konu Takip
                 </button>
             </div>
         </header>
@@ -73,7 +89,7 @@
             <!-- Pomodoro Widget -->
             <div class="bg-slate-900/80 border border-slate-800 rounded-2xl p-4 shadow-lg flex flex-col justify-between">
                 <div class="flex items-center justify-between mb-2">
-                    <span class="text-xs font-bold text-emerald-400 uppercase tracking-wider">⏱️ Pomodoro Çalışma Sayacı</span>
+                    <span class="text-xs font-bold text-emerald-400 uppercase tracking-wider">⏱️ Pomodoro Sayacı</span>
                     <span id="pomo-status-text" class="text-[10px] text-slate-400">25 Dk Odaklanma</span>
                 </div>
                 <div class="flex items-center justify-between gap-4 my-auto">
@@ -93,13 +109,70 @@
 
         </div>
 
+        <!-- MODÜL 0: GÜNLÜK SORU TAKİBİ & HEDEF MODÜLÜ -->
+        <div id="modul-gunluk" class="space-y-6">
+            <!-- Günlük Hedef Özeti -->
+            <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 shadow-xl space-y-4">
+                <div class="flex flex-col sm:flex-row items-center justify-between gap-3">
+                    <div>
+                        <h2 class="text-xs font-bold text-amber-400 uppercase tracking-wider">Bugünkü Soru Hedefim</h2>
+                        <p class="text-slate-400 text-xs">Çözdüğün soruları girerek günlük hedefini tamamla.</p>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <label class="text-xs text-slate-400 font-semibold">Hedef:</label>
+                        <input type="number" id="daily-target-input" value="200" onchange="setDailyTarget()" class="w-20 bg-slate-950 border border-slate-800 rounded-lg p-1.5 text-center text-xs font-bold text-amber-300">
+                    </div>
+                </div>
+
+                <!-- Progress Bar -->
+                <div class="space-y-1">
+                    <div class="flex justify-between text-xs font-bold">
+                        <span id="daily-progress-text" class="text-slate-300">0 / 200 Soru</span>
+                        <span id="daily-progress-percent" class="text-amber-400 font-black">%0</span>
+                    </div>
+                    <div class="w-full bg-slate-950 h-3 rounded-full overflow-hidden border border-slate-800">
+                        <div id="daily-progress-bar" class="bg-gradient-to-r from-amber-500 to-orange-500 h-full w-0 transition-all duration-500 rounded-full"></div>
+                    </div>
+                </div>
+
+                <!-- Soru Ekleme Formu -->
+                <div class="pt-3 border-t border-slate-800/80 grid grid-cols-1 sm:grid-cols-3 gap-3">
+                    <div>
+                        <label class="block text-[11px] font-semibold text-slate-400 mb-1">Ders Seçin</label>
+                        <select id="quest-ders" class="w-full bg-slate-950 border border-slate-800 rounded-xl p-2 text-xs text-slate-200">
+                            <option value="Matematik">Matematik</option>
+                            <option value="Türkçe">Türkçe</option>
+                            <option value="Fizik">Fizik</option>
+                            <option value="Kimya">Kimya</option>
+                            <option value="Biyoloji">Biyoloji</option>
+                            <option value="Sosyal">Sosyal Bilimler</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-[11px] font-semibold text-slate-400 mb-1">Çözülen Soru Sayısı</label>
+                        <input type="number" id="quest-count" placeholder="Örn: 40" class="w-full bg-slate-950 border border-slate-800 rounded-xl p-2 text-xs text-slate-100">
+                    </div>
+                    <div class="flex items-end">
+                        <button onclick="addDailyQuestions()" class="w-full bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold py-2 rounded-xl text-xs shadow-md transition">
+                            + Soru Sayısını Ekle
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bugünkü Ders Dağılımı Listesi -->
+            <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 shadow-xl space-y-3">
+                <h3 class="text-xs font-bold text-slate-400 uppercase tracking-wider">Bugün Çözülen Dersler</h3>
+                <div id="daily-ders-list" class="grid grid-cols-2 sm:grid-cols-3 gap-3 text-xs">
+                    <!-- Dinamik yüklenecek -->
+                </div>
+            </div>
+        </div>
+
         <!-- MODÜL 1: NET HESAPLAMA & DENEME TAKİBİ -->
-        <div id="modul-net" class="space-y-6">
+        <div id="modul-net" class="hidden space-y-6">
             
-            <!-- Main Input Container with Tab Selection -->
             <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 shadow-xl space-y-5">
-                
-                <!-- Tabs -->
                 <div class="flex border-b border-slate-800 pb-3 gap-2">
                     <button id="tab-tyt-btn" onclick="switchExamTab('tyt')" class="flex-1 py-2 rounded-xl font-bold text-sm bg-indigo-600 text-white transition">
                         TYT Dersleri (120 Soru)
@@ -109,7 +182,7 @@
                     </button>
                 </div>
 
-                <!-- TYT Content -->
+                <!-- TYT Inputs -->
                 <div id="tab-tyt" class="space-y-3">
                     <div class="grid grid-cols-12 gap-2 text-xs font-semibold text-slate-400 px-1 mb-1">
                         <span class="col-span-6">Ders Adı</span>
@@ -143,7 +216,7 @@
                     </div>
                 </div>
 
-                <!-- AYT Content -->
+                <!-- AYT Inputs -->
                 <div id="tab-ayt" class="space-y-3 hidden">
                     <div class="grid grid-cols-12 gap-2 text-xs font-semibold text-slate-400 px-1 mb-1">
                         <span class="col-span-6">Ders Adı</span>
@@ -199,7 +272,6 @@
                     </div>
                 </div>
 
-                <!-- Action Buttons -->
                 <div class="flex flex-col sm:flex-row gap-3 pt-2">
                     <button onclick="hesapla()" class="flex-1 bg-indigo-600 hover:bg-indigo-500 text-white font-bold py-2.5 rounded-xl text-sm shadow-md transition">
                         Hesapla & Hedefe Analiz Et
@@ -267,9 +339,7 @@
                                 <th class="px-3 py-2 text-right rounded-r-lg">Sıra</th>
                             </tr>
                         </thead>
-                        <tbody id="gecmis-listesi" class="divide-y divide-slate-800/50">
-                            <!-- Dynamic Rows -->
-                        </tbody>
+                        <tbody id="gecmis-listesi" class="divide-y divide-slate-800/50"></tbody>
                     </table>
                 </div>
             </section>
@@ -305,28 +375,113 @@
 
     <!-- JavaScript Logic -->
     <script>
-        // ANA TAB DEĞİŞTİRME MANTIĞI
+        // STREAK & GÜNLÜK HEDEF MANTIĞI
+        let streakData = JSON.parse(localStorage.getItem('yks_streak_data')) || { lastDate: '', count: 0 };
+        let dailyData = JSON.parse(localStorage.getItem('yks_daily_data')) || { date: '', target: 200, solved: 0, dersler: {} };
+
+        function updateStreak() {
+            const today = new Date().toLocaleDateString('tr-TR');
+            if (streakData.lastDate !== today) {
+                const yesterday = new Date(Date.now() - 86400000).toLocaleDateString('tr-TR');
+                if (streakData.lastDate === yesterday) {
+                    streakData.count += 1;
+                } else if (streakData.lastDate === '') {
+                    streakData.count = 1;
+                } else {
+                    streakData.count = 1; // Seri kırıldıysa sıfırla/yeniden başlat
+                }
+                streakData.lastDate = today;
+                localStorage.setItem('yks_streak_data', JSON.stringify(streakData));
+            }
+            document.getElementById('streak-count').innerText = streakData.count;
+        }
+
+        function checkDailyDataReset() {
+            const today = new Date().toLocaleDateString('tr-TR');
+            if (dailyData.date !== today) {
+                dailyData.date = today;
+                dailyData.solved = 0;
+                dailyData.dersler = {};
+                localStorage.setItem('yks_daily_data', JSON.stringify(dailyData));
+            }
+            document.getElementById('daily-target-input').value = dailyData.target;
+            renderDailyUI();
+        }
+
+        function setDailyTarget() {
+            const val = parseInt(document.getElementById('daily-target-input').value) || 200;
+            dailyData.target = val;
+            localStorage.setItem('yks_daily_data', JSON.stringify(dailyData));
+            renderDailyUI();
+        }
+
+        function addDailyQuestions() {
+            const ders = document.getElementById('quest-ders').value;
+            const count = parseInt(document.getElementById('quest-count').value) || 0;
+            if (count <= 0) return;
+
+            dailyData.solved += count;
+            dailyData.dersler[ders] = (dailyData.dersler[ders] || 0) + count;
+            localStorage.setItem('yks_daily_data', JSON.stringify(dailyData));
+
+            document.getElementById('quest-count').value = '';
+            updateStreak();
+            renderDailyUI();
+        }
+
+        function renderDailyUI() {
+            const percent = Math.min(Math.round((dailyData.solved / dailyData.target) * 100), 100);
+            document.getElementById('daily-progress-bar').style.width = `${percent}%`;
+            document.getElementById('daily-progress-percent').innerText = `%${percent}`;
+            document.getElementById('daily-progress-text').innerText = `${dailyData.solved} / ${dailyData.target} Soru`;
+
+            const dersListContainer = document.getElementById('daily-ders-list');
+            const keys = Object.keys(dailyData.dersler);
+            if (keys.length === 0) {
+                dersListContainer.innerHTML = `<p class="col-span-3 text-slate-500 italic text-center py-2">Bugün henüz soru girişi yapmadınız.</p>`;
+                return;
+            }
+
+            dersListContainer.innerHTML = keys.map(k => `
+                <div class="bg-slate-950 p-2.5 rounded-xl border border-slate-800 flex justify-between items-center">
+                    <span class="text-slate-300 font-medium">${k}</span>
+                    <span class="font-black text-amber-400">${dailyData.dersler[k]} Soru</span>
+                </div>
+            `).join('');
+        }
+
+        // ANA TAB DEĞİŞTİRME
         function mainTabSwitch(tab) {
+            const gunlukModul = document.getElementById('modul-gunluk');
             const netModul = document.getElementById('modul-net');
             const konuModul = document.getElementById('modul-konu');
+
+            const btnGunluk = document.getElementById('main-tab-gunluk');
             const btnNet = document.getElementById('main-tab-net');
             const btnKonu = document.getElementById('main-tab-konu');
 
-            if (tab === 'net') {
+            gunlukModul.classList.add('hidden');
+            netModul.classList.add('hidden');
+            konuModul.classList.add('hidden');
+
+            btnGunluk.className = "px-3.5 py-2 rounded-xl text-xs font-bold bg-slate-900 text-slate-400 hover:text-white border border-slate-800 transition";
+            btnNet.className = "px-3.5 py-2 rounded-xl text-xs font-bold bg-slate-900 text-slate-400 hover:text-white border border-slate-800 transition";
+            btnKonu.className = "px-3.5 py-2 rounded-xl text-xs font-bold bg-slate-900 text-slate-400 hover:text-white border border-slate-800 transition";
+
+            if (tab === 'gunluk') {
+                gunlukModul.classList.remove('hidden');
+                btnGunluk.className = "px-3.5 py-2 rounded-xl text-xs font-bold bg-amber-500 text-slate-950 shadow-md transition";
+            } else if (tab === 'net') {
                 netModul.classList.remove('hidden');
-                konuModul.classList.add('hidden');
-                btnNet.className = "px-4 py-2 rounded-xl text-xs font-bold bg-indigo-600 text-white shadow-md transition";
-                btnKonu.className = "px-4 py-2 rounded-xl text-xs font-bold bg-slate-900 text-slate-400 hover:text-white border border-slate-800 transition";
+                btnNet.className = "px-3.5 py-2 rounded-xl text-xs font-bold bg-indigo-600 text-white shadow-md transition";
             } else {
                 konuModul.classList.remove('hidden');
-                netModul.classList.add('hidden');
-                btnKonu.className = "px-4 py-2 rounded-xl text-xs font-bold bg-emerald-600 text-white shadow-md transition";
-                btnNet.className = "px-4 py-2 rounded-xl text-xs font-bold bg-slate-900 text-slate-400 hover:text-white border border-slate-800 transition";
+                btnKonu.className = "px-3.5 py-2 rounded-xl text-xs font-bold bg-emerald-600 text-white shadow-md transition";
                 sınavTürüDegistir('tyt');
             }
         }
 
-        // TAB SWITCHING LOGIC (DENEME)
+        // DENEME TAB DEĞİŞTİRME
         function switchExamTab(tab) {
             const tytContent = document.getElementById('tab-tyt');
             const aytContent = document.getElementById('tab-ayt');
@@ -346,7 +501,7 @@
             }
         }
 
-        // COUNTDOWN TIMER LOGIC
+        // COUNTDOWN TIMER
         function initCountdown() {
             const yksDate = new Date('June 20, 2027 10:15:00').getTime();
             function updateTimer() {
@@ -368,11 +523,10 @@
             setInterval(updateTimer, 1000);
         }
 
-        // POMODORO TIMER LOGIC
+        // POMODORO TIMER
         let pomoTime = 25 * 60;
         let pomoInterval = null;
         let isPomoRunning = false;
-        let isWorkSession = true;
 
         function updatePomoDisplay() {
             const m = Math.floor(pomoTime / 60);
@@ -386,32 +540,20 @@
                 clearInterval(pomoInterval);
                 isPomoRunning = false;
                 btn.innerText = "Devam Et";
-                btn.className = "flex-1 bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-2 px-3 rounded-xl text-xs transition";
+                btn.className = "flex-1 bg-emerald-600 text-white font-bold py-2 px-3 rounded-xl text-xs";
             } else {
                 isPomoRunning = true;
                 btn.innerText = "Durdur";
-                btn.className = "flex-1 bg-amber-600 hover:bg-amber-500 text-white font-bold py-2 px-3 rounded-xl text-xs transition";
+                btn.className = "flex-1 bg-amber-600 text-white font-bold py-2 px-3 rounded-xl text-xs";
                 pomoInterval = setInterval(() => {
                     if (pomoTime > 0) {
                         pomoTime--;
                         updatePomoDisplay();
                     } else {
                         clearInterval(pomoInterval);
-                        isPomoRunning = false;
-                        if (isWorkSession) {
-                            alert("25 Dk Odaklanma Bitti! 5 Dk Mola Zamanı.");
-                            isWorkSession = false;
-                            pomoTime = 5 * 60;
-                            document.getElementById('pomo-status-text').innerText = "5 Dk Mola";
-                        } else {
-                            alert("Mola Bitti! Çalışmaya Devam.");
-                            isWorkSession = true;
-                            pomoTime = 25 * 60;
-                            document.getElementById('pomo-status-text').innerText = "25 Dk Odaklanma";
-                        }
-                        btn.innerText = "Başlat";
-                        btn.className = "flex-1 bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-2 px-3 rounded-xl text-xs transition";
-                        updatePomoDisplay();
+                        alert("Pomodoro Bitti!");
+                        updateStreak();
+                        resetPomodoro();
                     }
                 }, 1000);
             }
@@ -420,11 +562,9 @@
         function resetPomodoro() {
             clearInterval(pomoInterval);
             isPomoRunning = false;
-            isWorkSession = true;
             pomoTime = 25 * 60;
             document.getElementById('pomo-btn').innerText = "Başlat";
-            document.getElementById('pomo-btn').className = "flex-1 bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-2 px-3 rounded-xl text-xs transition";
-            document.getElementById('pomo-status-text').innerText = "25 Dk Odaklanma";
+            document.getElementById('pomo-btn').className = "flex-1 bg-emerald-600 text-white font-bold py-2 px-3 rounded-xl text-xs";
             updatePomoDisplay();
         }
 
@@ -436,22 +576,13 @@
             return net < 0 ? 0 : net;
         }
 
-        // Doğru ÖSYM Yerleştirme Puanı (Max 560: 500 Ham + 60 OBP) Sıralama Simülasyonu
         function predictRank(yerlesmePuan) {
             if (yerlesmePuan <= 150) return "Baraj Altı";
-            
             const anchors = [
-                {p: 558.0, r: 1},
-                {p: 550.0, r: 100},
-                {p: 535.0, r: 1200},
-                {p: 515.0, r: 5000}, 
-                {p: 490.0, r: 15000},
-                {p: 460.0, r: 32000},
-                {p: 420.0, r: 62000},
-                {p: 370.0, r: 120000},
-                {p: 310.0, r: 210000},
-                {p: 250.0, r: 350000},
-                {p: 180.0, r: 600000}
+                {p: 558.0, r: 1}, {p: 550.0, r: 100}, {p: 535.0, r: 1200},
+                {p: 515.0, r: 5000}, {p: 490.0, r: 15000}, {p: 460.0, r: 32000},
+                {p: 420.0, r: 62000}, {p: 370.0, r: 120000}, {p: 310.0, r: 210000},
+                {p: 250.0, r: 350000}, {p: 180.0, r: 600000}
             ];
 
             if (yerlesmePuan >= 558.0) return "1 - 50";
@@ -488,7 +619,6 @@
             const aytB = calcNet('ayt-biyo-d', 'ayt-biyo-y');
             const totalAyt = aytM + aytF + aytK + aytB;
 
-            // ÖSYM Standart Katsayı Hesabı (Full Net = 500 Ham Puan)
             const tytPuanKatki = (tytT * 1.32) + (tytS * 1.36) + (tytM * 1.32) + (tytF * 1.36);
             const aytPuanKatki = (aytM * 3.0) + (aytF * 2.85) + (aytK * 3.07) + (aytB * 3.07);
             
@@ -542,6 +672,7 @@
             localStorage.setItem('yks_deneme_gecmis', JSON.stringify(mevcut));
 
             document.getElementById('deneme-adi').value = '';
+            updateStreak();
             renderAll();
         }
 
@@ -686,6 +817,7 @@
                 tamamlananKonular[key] = true;
             }
             localStorage.setItem('yks_tamamlanan_konular', JSON.stringify(tamamlananKonular));
+            updateStreak();
             renderKonular();
             hesaplaIlerleme();
         }
@@ -710,6 +842,8 @@
 
         window.onload = function() {
             initCountdown();
+            checkDailyDataReset();
+            updateStreak();
             renderAll();
         };
     </script>
